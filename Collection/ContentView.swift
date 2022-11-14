@@ -2,7 +2,7 @@
 //  ContentView.swift
 //  Collection
 //
-//  Created by Frédéric Fréville on 22/09/2022.
+//  Created by Frédéric Fréville on 14/11/2022.
 //
 
 import SwiftUI
@@ -10,12 +10,19 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+            CircleImage()
+            VStack(alignment: .leading) {
+                Text("Statue 1")
+                    .font(.title)
+                HStack {
+                    Text("La premiere")
+                        .font(.subheadline)
+                    Spacer()
+                    Text("Edition limitée")
+                }
+            }
+            .padding()
         }
-        .padding()
     }
 }
 
