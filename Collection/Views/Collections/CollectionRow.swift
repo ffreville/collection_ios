@@ -6,15 +6,26 @@
 //
 
 import SwiftUI
+import ObjectBox
 
 struct CollectionRow: View {
+    var store: Store
+    var collection: Collection
+    var person : Int
+    
+    @StateObject var model: DataModel
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationLink {
+            CollectionDetail(store: store, collection: collection, person: person,model: model)
+        } label: {
+            Text(collection.name)
+        }
     }
 }
 
 struct CollectionRow_Previews: PreviewProvider {
     static var previews: some View {
-        CollectionRow()
+        CollectionRow(store: try! Store(directoryPath: ""), collection: Collection(), person: 2, model: DataModel())
     }
 }

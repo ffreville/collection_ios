@@ -10,7 +10,8 @@ import SwiftUI
 struct HomeButtonGwen: View {
     var body: some View {
         CircleImage(image: Image("stitch-tradition"),
-        width: 340,height: 340)
+        width: 340,height: 340
+        )
     }
 }
 

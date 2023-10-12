@@ -6,15 +6,17 @@
 //
 
 import SwiftUI
+import ObjectBox
 
 struct ContentView: View {
+    var store: Store
     var body: some View {
-        Home()
+        Home(store: store)
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(store: try! Store(directoryPath: ""))
     }
 }

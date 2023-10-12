@@ -1,6 +1,7 @@
 import Foundation
+import ObjectBox
 
-struct Brand: Hashable, Codable {
-    var id: Int
-    var name: String
+class Brand: Entity, Identifiable, ObservableObject  {
+    var id: Id = 0
+    @Published var name: String = ""
 }

@@ -1,21 +1,18 @@
 import Foundation
+import ObjectBox
 
-struct Category: Hashable, Codable {
-    var id: Int
-    var name: String
-    var group: CategoryGroup
+class Category: Entity, Identifiable, ObservableObject, Hashable, Equatable{
+    var id: Id = 0
+    var person: Int = 2
+    @Published var name: String = ""
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(name)
+    }
+    
+    static func ==(lhs: Category, rhs: Category) -> Bool {
+
+        return lhs.name == rhs.name
+    }
+
 }
-
-// Consoles
-// Jeux vidéos
-
-// Mangas
-// Bds
-
-// Statues
-// Peluches
-// Sac
-
-// Casse tête
-
-

@@ -6,48 +6,69 @@
 //
 
 import SwiftUI
+import ObjectBox
 
 struct ItemDetail: View {
-    @EnvironmentObject var modelData: ModelData
+    var store: Store
+    var collection : Collection
+    @ObservedObject var item: Item
+    var person : Int
+    @State private var itemCategories : [ItemCategory] = []
+    @State private var infos : [ItemInfo] = []
     
-    var item: Item
-    
-    var itemIndex: Int {
-        modelData.items.firstIndex(where: { $0.id == item.id })!
-    }
+    @StateObject var model: DataModel
     
     var body: some View {
         ScrollView {
-            CircleImage(image: item.image,
-            width: 340, height: 340)
             VStack(alignment: .leading) {
                 HStack {
                     Text(item.name)
                         .font(.title)
-                    FavoriteButton(isSet: $modelData.items[itemIndex].isFavourite)
+                    NavigationLink {
+                        ItemCreateOrEdit(store: store, collection: collection,item: item, person: person, model: model)
+                    } label: {
+                        AddButtonView(text: "Editer")
+                    }
                 }
                 HStack {
-                    Text("La premiere")
-                        .font(.subheadline)
-                    Spacer()
-                    Text("Edition limitée")
+                    if let name = item.collection.target?.name {
+                        Text(name)
+                            .font(.subheadline)
+                    }
+
                 }
+                Divider()
+                HStack {
+                    Text("Catégories : ")
+                    ForEach(itemCategories) { itemCateory in
+                        if let name = itemCateory.category.target?.name {
+                            Text(name).font(.subheadline)
+                        }
+                        
+                    }
+                }.navigationTitle(item.name)
                 
                 Divider()
-                Text("Description de la statue")
+                
+                ForEach(infos) { info in
+                    Text(info.name+" : "+info.value)
+                }
+
             }
             .padding()
         }
         .navigationTitle(item.name)
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear(perform: {
+            itemCategories = CategoryRepository().getItemCategories(store: store, item: item)
+            infos = InfoRepository().getItemInfos(store: store, item: item)
+        })
     }
 }
 
 struct ItemDetail_Previews: PreviewProvider {
-    static let modelData = ModelData()
     
     static var previews: some View {
-        ItemDetail(item: modelData.items[0])
-            .environmentObject(modelData)
+        ItemDetail(store: try! Store(directoryPath: ""), collection: Collection(), item: Item(), person: 2, model: DataModel())
     }
 }

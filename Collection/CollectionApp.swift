@@ -1,14 +1,14 @@
 import SwiftUI
+import ObjectBox
 
 @main
 struct CollectionApp: App {
     
-    @StateObject private var modelData = ModelData()
     
     var body: some Scene {
+        let store = try! Store(directoryPath: "/Users/frederic/Documents/mydatabase/")
         WindowGroup {
-            ContentView()
-                .environmentObject(modelData)
+            ContentView(store: store)
         }
     }
 }

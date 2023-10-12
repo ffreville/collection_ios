@@ -1,9 +1,10 @@
 import Foundation
 import SwiftUI
+import ObjectBox
 
-struct Collection: Hashable, Codable {
-    var id: Int
-    var name: String
-    var category: Category
-    var fields: [String]
+class Collection: Entity, Identifiable, ObservableObject {
+    var id: Id = 0
+    var person: Int = 2
+    @Published var name: String = ""
+
 }
